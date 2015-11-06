@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html ng-app='carApp'>
+  <head>
+    <meta charset="utf-8">
+    <title>Angular State Demo</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js'></script>
+    <script src='app.js'></script>
+  </head>
+  <body ng-controller='carWash'>
+    <div class="container">
+      <div class="row">
+        <div class="page-header">
+          <h1>Super Car Wash</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Intake Form</h2>
+          <form>
+            <div class="form-group">
+              <input class="form-control" placeholder="License Plate" ng-model='newCar.license'>
+            </div>
+            <div class="form-group">
+              <input class="form-control" placeholder="Owner's Name" ng-model='newCar.owner'>
+            </div>
+            <div class="form-group">
+              <select class="form-control" ng-model='newCar.type'>
+                <option>Enter a Type</option>
+                <option value="exterior">Exterior Only</option>
+                <option value="interior-exterior">Interior / Exterior</option>
+                <option value="deluxe">Deluxe</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn primary" ng-click='washCar()' ng-disabled='washingCar.license'>
+                Start Washing
+                <i class="glyphicon glyphicon-arrow-right"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-4">
+          <h2>Washing...</h2>
+          <form>
+            <div class="form-group">
+              <p class="form-control-static">
+                <strong>Plate #: </strong> {{ washingCar.license }}
+              </p>
+            </div>
+            <div class="form-group">
+              <p class="form-control-static">
+                <strong>Owner Name: </strong> {{ washingCar.owner }}
+              </p>
+            </div>
+            <div class="form-group">
+              <p class="form-control-static">
+                <strong>Type: </strong> {{ washingCar.type }}
+              </p>
+            </div>
+            <div class="form-group">
+              <input class="form-control" placeholder="Washed by..." ng-model='washingCar.washer'>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn primary" ng-click='polishCar()' ng-disabled='polishingCar.license'>
+                Send to Polish
+                <i class="glyphicon glyphicon-arrow-right"></i>
+              </button>
+            </div>
+          </form>
+          <div class="jumbotron" ng-hide='washingCar.license'>
+            <p class="lead">Nothing is being washed right now</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h2>Polishing...</h2>
+          <form>
+            <div class="form-group">
+              <p class="form-control-static">
+                <strong>Plate #: </strong> {{ polishingCar.license }}
+              </p>
+            </div>
+            <div class="form-group">
+              <p class="form-control-static">
+                <strong>Owner Name: </strong> {{ polishingCar.owner }}
+              </p>
+            </div>
+            <div class="form-group">
+              <p class="form-control-static">
+                <strong>Type: </strong> {{ polishingCar.type }}
+              </p>
+            </div>
+            <div class="form-group">
+              <p class="form-control-static">
+                <strong>Washed by: </strong> {{ polishingCar.washer }}
+              </p>
+            </div>
+            <div class="form-group">
+              <input class="form-control" placeholder="Polished by..." ng-model='polishingCar.polisher'>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn primary" ng-click='finishCar()'>
+                <i class="glyphicon glyphicon-check"></i>
+                Mark Complete
+              </button>
+            </div>
+          </form>
+          <div class="jumbotron" ng-hide='polishingCar.license'>
+            <p class="lead">Nothing is being polished right now</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <h2>History</h2>
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <th>License Plate</th>
+              <th>Owner Name</th>
+              <th>Type</th>
+              <th>Washed by</th>
+              <th>Polished by</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat='car in finishedCar'>
+              <td>{{ car.license }}</td>
+              <td>{{ car.owner }}</td>
+              <td>{{ car.type }}</td>
+              <td>{{ car.washer }}</td>
+              <td>{{ car.polisher }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="jumbotron" ng-hide='finshedCar !== []'>
+          <p class="lead">You have not washed any cars</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
